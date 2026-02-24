@@ -209,7 +209,7 @@ JUDGE_RESPONSE_FORMAT_GOOGLE: dict[str, Any] = {
 
 
 COLLECT_DEFAULTS: dict[str, Any] = {
-    "questions": "questions.json",
+    "questions": "questions_v2.json",
     "models": "",
     "models_file": "",
     "output_dir": "runs",
@@ -367,7 +367,7 @@ def parse_args() -> argparse.Namespace:
         "collect",
         help="Collect model responses for benchmark questions (stateless requests).",
     )
-    collect.add_argument("--questions", default="questions.json")
+    collect.add_argument("--questions", default="questions_v2.json")
     collect.add_argument("--models", default="")
     collect.add_argument("--models-file", default="")
     collect.add_argument("--config", default="config.json")
@@ -1096,7 +1096,7 @@ def load_questions(path: str, techniques_filter: list[str], limit: int) -> list[
 
     techniques = payload.get("techniques")
     if not isinstance(techniques, list):
-        raise ValueError("questions.json must contain a top-level 'techniques' array.")
+        raise ValueError("questions file must contain a top-level 'techniques' array.")
 
     allowed = set(techniques_filter)
     selected: list[dict[str, Any]] = []

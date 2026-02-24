@@ -18,7 +18,7 @@ This repo now uses a strict **two-step** workflow:
 
 ## Files
 
-- `questions.json`: benchmark dataset
+- `questions_v2.json`: benchmark dataset
 - `guide.md`: benchmark intent/rubric
 - `scripts/openrouter_benchmark.py`: CLI runner (`collect` and `grade`)
 - `models.example.txt`: sample model list format
