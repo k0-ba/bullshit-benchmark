@@ -3074,16 +3074,7 @@
       });
     }
 
-    function shouldRedirectToStandalone() {
-      return window.location.protocol === "file:" && !embeddedFileStore();
-    }
-
     function bootstrap() {
-      if (shouldRedirectToStandalone()) {
-        const standaloneUrl = new URL("index_standalone.html", window.location.href).toString();
-        window.location.replace(standaloneUrl);
-        return;
-      }
       cacheElements();
       syncSelectedJudgesFromUI();
       buildScoreFilter();

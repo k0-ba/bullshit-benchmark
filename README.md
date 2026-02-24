@@ -13,10 +13,9 @@ This repo now uses a strict **two-step** workflow:
 ## Quickstart (Run + View)
 
 - End-to-end rerun and publish latest viewer data: `scripts/run_end_to_end.sh`
-- Zero-command full explorer (exact `index.html` UI, embedded data): `viewer/index_standalone.html`
-- Zero-command snapshot view (compact standalone): `viewer/latest_snapshot.html`
+- Main review URL: `viewer/index.html`
 - Minimal review UI: `viewer/simple.html`
-- Full review UI: `viewer/index.html`
+- Optional standalone snapshot: `viewer/latest_snapshot.html`
 
 ## Files
 
@@ -28,7 +27,6 @@ This repo now uses a strict **two-step** workflow:
 - `config.example.json`: example config defaults
 - `config.v2.json`: v2 defaults (no response system prompt, reasoning sweep example, panel judging)
 - `viewer/index.html`: canonical interactive viewer
-- `viewer/index_standalone.html`: standalone full explorer with embedded canonical dataset
 - `viewer/simple.html`: simplified results view (quick readout + lightweight filters)
 - `viewer/latest_snapshot.html`: standalone no-server snapshot (single self-contained HTML with embedded row-level data)
 - `viewer/data/latest/*`: canonical dataset consumed by the viewer
@@ -40,7 +38,6 @@ This repo now uses a strict **two-step** workflow:
 
 For open-source hygiene, keep one canonical visualization path:
 - `viewer/index.html` (final HTML UI)
-- `viewer/index_standalone.html` (full explorer, standalone no-server)
 - `viewer/simple.html` (minimal UI for quick review)
 - `viewer/data/latest/responses.jsonl`
 - `viewer/data/latest/collection_stats.json`
@@ -55,7 +52,7 @@ All timestamped `runs*`, interim reports, ad-hoc zips, and temporary JSON files 
 
 This layout provides standard benchmark-style outputs without requiring a paper:
 - stable machine-readable artifacts (`aggregate_summary.json`, `aggregate.jsonl`, `leaderboard.csv`)
-- stable human-facing views (`index_standalone.html`, `latest_snapshot.html`, `simple.html`, `index.html`)
+- stable human-facing views (`index.html`, `simple.html`, `latest_snapshot.html`)
 - one stable “latest” path (`viewer/data/latest`)
 
 ## Environment
@@ -210,7 +207,6 @@ To remove generated run/archive/temp files before sharing:
 
 This publish step also exports `viewer/data/latest/leaderboard.csv` for spreadsheet-friendly review.
 It also regenerates:
-- `viewer/index_standalone.html` (full explorer with embedded dataset; no server required)
 - `viewer/latest_snapshot.html` (compact standalone snapshot with embedded aggregate rows)
 
 ## Scoring meaning

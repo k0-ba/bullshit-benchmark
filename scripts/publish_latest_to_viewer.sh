@@ -212,8 +212,7 @@ cat > "${OUTPUT_DIR}/manifest.json" <<EOF
   },
   "exports": {
     "leaderboard_csv": "${OUTPUT_DIR}/leaderboard.csv",
-    "snapshot_html": "viewer/latest_snapshot.html",
-    "index_standalone_html": "viewer/index_standalone.html"
+    "snapshot_html": "viewer/latest_snapshot.html"
   }
 }
 EOF
@@ -223,15 +222,5 @@ python3 scripts/generate_snapshot_html.py \
   --aggregate-jsonl "${OUTPUT_DIR}/aggregate.jsonl" \
   --manifest-json "${OUTPUT_DIR}/manifest.json" \
   --output-html "viewer/latest_snapshot.html"
-
-python3 scripts/generate_index_standalone.py \
-  --source-html "viewer/index.html" \
-  --responses-jsonl "${OUTPUT_DIR}/responses.jsonl" \
-  --collection-stats-json "${OUTPUT_DIR}/collection_stats.json" \
-  --panel-summary-json "${OUTPUT_DIR}/panel_summary.json" \
-  --aggregate-summary-json "${OUTPUT_DIR}/aggregate_summary.json" \
-  --aggregate-jsonl "${OUTPUT_DIR}/aggregate.jsonl" \
-  --manifest-json "${OUTPUT_DIR}/manifest.json" \
-  --output-html "viewer/index_standalone.html"
 
 echo "Published viewer dataset to ${OUTPUT_DIR}"
