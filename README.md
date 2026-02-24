@@ -14,7 +14,6 @@ This repo now uses a strict **two-step** workflow:
 
 - End-to-end rerun and publish latest viewer data: `scripts/run_end_to_end.sh`
 - Main review URL: `viewer/index.html`
-- Minimal review UI: `viewer/simple.html`
 - Optional standalone snapshot: `viewer/latest_snapshot.html`
 
 ## Files
@@ -27,7 +26,6 @@ This repo now uses a strict **two-step** workflow:
 - `config.example.json`: example config defaults
 - `config.v2.json`: v2 defaults (no response system prompt, reasoning sweep example, panel judging)
 - `viewer/index.html`: canonical interactive viewer
-- `viewer/simple.html`: simplified results view (quick readout + lightweight filters)
 - `viewer/latest_snapshot.html`: standalone no-server snapshot (single self-contained HTML with embedded row-level data)
 - `viewer/data/latest/*`: canonical dataset consumed by the viewer
 - `scripts/publish_latest_to_viewer.sh`: publish one run's final artifacts into `viewer/data/latest`
@@ -38,7 +36,6 @@ This repo now uses a strict **two-step** workflow:
 
 For open-source hygiene, keep one canonical visualization path:
 - `viewer/index.html` (final HTML UI)
-- `viewer/simple.html` (minimal UI for quick review)
 - `viewer/data/latest/responses.jsonl`
 - `viewer/data/latest/collection_stats.json`
 - `viewer/data/latest/panel_summary.json`
@@ -52,7 +49,7 @@ All timestamped `runs*`, interim reports, ad-hoc zips, and temporary JSON files 
 
 This layout provides standard benchmark-style outputs without requiring a paper:
 - stable machine-readable artifacts (`aggregate_summary.json`, `aggregate.jsonl`, `leaderboard.csv`)
-- stable human-facing views (`index.html`, `simple.html`, `latest_snapshot.html`)
+- stable human-facing views (`index.html`, `latest_snapshot.html`)
 - one stable “latest” path (`viewer/data/latest`)
 
 ## Environment

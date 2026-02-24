@@ -168,7 +168,6 @@ echo "Run ID: ${RUN_ID}"
 echo "Panel ID: ${PANEL_ID}"
 echo "Viewer data: ${ROOT_DIR}/viewer/data/latest"
 echo "Open UI after serving:"
-echo "  /viewer/simple.html"
 echo "  /viewer/index.html"
 
 if [[ "${SERVE}" -eq 1 ]]; then
