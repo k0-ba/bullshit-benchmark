@@ -2,9 +2,12 @@
 
 A benchmark for testing whether models identify and push back on nonsensical prompts instead of confidently answering them.
 
-## Public Viewer
+## 📺 Public Viewers
 
-- GitHub Pages: https://petergpt.github.io/bullshit-benchmark/viewer/index.html
+✨ **Check out the stunning new visual dashboard:** 
+👉 **[Fancy Viewer (Interactive DataViz) 💩](https://k0-ba.github.io/bullshit-benchmark/viewer/fancy-viewer/index.html)** 👈
+
+*Alternatively, you can access the [Original Data Explorer](https://petergpt.github.io/bullshit-benchmark/viewer/index.html).*
 
 ## Repo Layout
 
