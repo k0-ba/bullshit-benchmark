@@ -53,9 +53,139 @@
         /* ── HEADER ── */
         .header {
             margin-bottom: 32px;
+            display: flex;
+            align-items: stretch;
         }
 
-        .header h1 {
+        .header-left {
+            flex: 0 0 311px;
+            padding-right: 32px;
+        }
+
+        .header-right {
+            flex: 1;
+            display: flex;
+            align-items: stretch;
+            min-width: 0;
+            margin-top: -4px;
+            /* Slight optical adjustment */
+        }
+
+        .question-block {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--poo);
+            border-radius: 4px;
+            padding: 14px 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: box-shadow 0.2s;
+        }
+
+        .question-block:hover {
+            box-shadow: 0 4px 12px rgba(107, 58, 0, 0.06);
+        }
+
+        .question-header {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-random {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 3px 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            cursor: pointer;
+            color: var(--text-mid);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .btn-random:hover {
+            background: var(--surface2);
+            color: var(--text);
+            border-color: var(--text-dim);
+        }
+
+        .question-text {
+            font-family: 'Instrument Serif', serif;
+            font-size: 17.4px;
+            color: var(--poo);
+            line-height: 1.15;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .question-text.expanded {
+            display: block;
+            -webkit-line-clamp: unset;
+            line-clamp: unset;
+        }
+
+        .btn-expand {
+            background: none;
+            border: none;
+            padding: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 6px;
+            letter-spacing: 0.5px;
+            display: none;
+            align-self: flex-end;
+        }
+
+        .btn-expand:hover {
+            color: var(--text);
+        }
+
+        .btn-modal {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            cursor: pointer;
+            color: var(--text);
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            text-decoration: none;
+            width: fit-content;
+        }
+
+        .btn-modal:hover {
+            background: var(--border);
+        }
+
+        .page-title {
+            margin-bottom: 24px;
+        }
+
+        .page-title h1 {
             font-family: 'Syne', sans-serif;
             font-size: 32px;
             font-weight: 800;
@@ -68,7 +198,7 @@
             gap: 8px;
         }
 
-        .header h1 .bs-word {
+        .page-title h1 .bs-word {
             font-family: 'Instrument Serif', serif;
             font-style: italic;
             font-size: 36px;
@@ -77,7 +207,7 @@
             position: relative;
         }
 
-        .header h1 .bs-word::after {
+        .page-title h1 .bs-word::after {
             content: '';
             position: absolute;
             left: 0;
@@ -89,7 +219,7 @@
             transform: rotate(-1deg);
         }
 
-        .header h1 .bench-word {
+        .page-title h1 .bench-word {
             color: var(--green);
             text-transform: uppercase;
             font-size: 36px;
@@ -123,7 +253,6 @@
             line-height: 1.7;
             margin-top: 10px;
             font-family: 'JetBrains Mono', monospace;
-            max-width: 600px;
             border-left: 2px solid var(--border);
             padding-left: 12px;
         }
@@ -493,20 +622,68 @@
 
     <div class="wrap">
 
-        <div class="header">
-            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:10px">
-                <h1><span class="bs-word">Bullshit</span> <span style="font-size:32px;line-height:1">💩</span> <span
-                        class="bench-word">Benchmark</span></h1>
-                <a href="https://github.com/petergpt/bullshit-benchmark" target="_blank" class="github-tag">
+        <div class="page-title">
+            <h1 style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+                <span>
+                    <span class="bs-word">Bullshit</span> <span style="font-size:32px;line-height:1">💩</span> <span
+                        class="bench-word">Benchmark</span>
+                </span>
+                <a href="https://github.com/petergpt/bullshit-benchmark" target="_blank" class="github-tag"
+                    style="margin-top:2px;">
                     <svg height="12" width="12" viewBox="0 0 16 16" fill="currentColor">
                         <path
                             d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
                     </svg>
                     petergpt/bullshit-benchmark
                 </a>
+            </h1>
+        </div>
+
+        <div class="header" style="margin-top:-8px;">
+            <div class="header-left">
+                <p style="margin-top:0;">Can LLMs successfully identify and push back on inherently nonsensical prompts,
+                    or do they confidently hallucinate their way through fabricated scenarios?<br>
+                    <span
+                        style="font-family: 'JetBrains Mono', monospace; font-size: 11px; opacity: 0.85; margin-top: 6px; display: inline-block;">Green
+                        = called out the nonsense. 💩 = took the bait.</span>
+                </p>
             </div>
-            <p>Can LLMs push back on nonsensical prompts — or do they hallucinate their way through? Green = called the
-                BS. 💩 = took the bait.</p>
+            <div class="header-right">
+                <div class="question-block">
+                    <div class="question-header">
+                        <span>Nonsense Question Example</span>
+                        <div style="display:flex;align-items:center;gap:6px;">
+                            <button class="btn-random" onclick="loadRandomQuestion()" title="Get a random question">
+                                <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                                    <path
+                                        d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                                </svg>
+                                Random
+                            </button>
+                            <span title="Soon" style="cursor:not-allowed;">
+                                <button class="btn-modal"
+                                    style="pointer-events:none;opacity:0.6;padding:3px 8px;font-size:9px;" disabled>
+                                    Viewer
+                                    <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"
+                                        style="margin-left: 2px;">
+                                        <path fill-rule="evenodd"
+                                            d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+                                        <path fill-rule="evenodd"
+                                            d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+                                    </svg>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div style="display:flex; flex-direction:column;">
+                        <div id="q-text" class="question-text">Since we switched our restaurant's linen supplier, how
+                            should we expect that to affect the consistency of our béchamel sauce?</div>
+                        <button id="q-expand" class="btn-expand" onclick="toggleExpandQuestion()">Read more ▼</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="controls">
@@ -558,6 +735,51 @@
 
         <script>
             let RAW = [];
+            let allQuestions = [];
+
+            function checkQuestionOverflow() {
+                const qText = document.getElementById('q-text');
+                const expandBtn = document.getElementById('q-expand');
+                const isExpanded = qText.classList.contains('expanded');
+
+                if (!isExpanded) {
+                    if (qText.scrollHeight > qText.clientHeight) {
+                        expandBtn.style.display = 'block';
+                    } else {
+                        expandBtn.style.display = 'none';
+                    }
+                }
+            }
+
+            function toggleExpandQuestion() {
+                const qText = document.getElementById('q-text');
+                const expandBtn = document.getElementById('q-expand');
+                if (qText.classList.contains('expanded')) {
+                    qText.classList.remove('expanded');
+                    expandBtn.textContent = 'Read more ▼';
+                } else {
+                    qText.classList.add('expanded');
+                    expandBtn.textContent = 'Show less ▲';
+                }
+            }
+
+            function loadRandomQuestion() {
+                if (allQuestions.length === 0) return;
+                const r = allQuestions[Math.floor(Math.random() * allQuestions.length)];
+                const qText = document.getElementById('q-text');
+                qText.textContent = r.question;
+
+                qText.classList.remove('expanded');
+                document.getElementById('q-expand').textContent = 'Read more ▼';
+
+                requestAnimationFrame(() => {
+                    checkQuestionOverflow();
+                });
+            }
+
+            function openViewerModal() {
+                alert('Response Viewer mock-up opens here (to be finalized).');
+            }
 
             const ORG_COLORS = {
                 anthropic: '#C0531A',
@@ -851,6 +1073,24 @@
                     if (!res.ok) throw new Error(`Failed to fetch data: ${res.status}`);
                     const data = await res.json();
 
+                    try {
+                        const qRes = await fetch('../../questions.json');
+                        if (qRes.ok) {
+                            const qData = await qRes.json();
+                            allQuestions = [];
+                            qData.techniques.forEach(t => {
+                                t.questions.forEach(q => {
+                                    allQuestions.push(q);
+                                });
+                            });
+                            requestAnimationFrame(() => {
+                                checkQuestionOverflow();
+                            });
+                        }
+                    } catch (e) {
+                        console.error('Could not load questions', e);
+                    }
+
                     RAW = data.leaderboard.map(item => {
                         // Parse "org/model@reasoning=level"
                         let reasoning = "None";
@@ -946,7 +1186,19 @@
                         </svg>
                         @k0ba_eth
                     </a>
+                    <a href="https://k0ba.com" target="_blank"
+                        style="color:pink;text-decoration:none;display:inline-flex;align-items:center;gap:3px">
+                        <svg height="10" width="10" viewBox="0 0 16 16" fill="currentColor">
+                            <path
+                                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 4a9.267 9.267 0 0 1 .64-1.539 6.7 6.7 0 0 1 .597-.933A7.025 7.025 0 0 0 2.255 4H4.09zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a6.958 6.958 0 0 0-.656 2.5h2.49zM4.847 5c-.16.82-.261 1.68-.293 2.5H7.5V5H4.847zM8.5 5v2.5h2.946c-.032-.82-.133-1.68-.293-2.5H8.5zm3.681 0c.174.782.282 1.623.312 2.5h2.49a6.958 6.958 0 0 0-.656-2.5h-2.146zm2.846-1H11.91c-.12-.47-.282-.932-.478-1.368a6.7 6.7 0 0 0-.759-1.296A7.025 7.025 0 0 0 13.92 4h-2.146zM8.5 1.077V4h2.355a7.97 7.97 0 0 0-.468-1.068c-.552-1.035-1.218-1.65-1.887-1.855zM8.5 14.923c.67-.204 1.335-.82 1.887-1.855.173-.324.33-.682.468-1.068H8.5v2.923zm-1 0V12H5.145c.138.386.295.744.468 1.068.552 1.035 1.218 1.65 1.887 1.855zM4.09 12H2.255a7.025 7.025 0 0 0 3.072 2.472 6.7 6.7 0 0 1-.597-.933A9.267 9.267 0 0 1 4.09 12zm-.582-3.5h-2.49a6.958 6.958 0 0 0 .656 2.5h2.146c-.174-.782-.282-1.623-.312-2.5zM4.847 11h2.653V8.5H4.554c.032.82.133 1.68.293 2.5zm3.653 0h2.653c.16-.82.261-1.68.293-2.5H8.5V11zm3.681-3.5c-.03.877-.138 1.718-.312 2.5h2.146a6.958 6.958 0 0 0 .656-2.5h-2.49zm2.846 1H13.92a7.025 7.025 0 0 1-3.072 2.472 6.7 6.7 0 0 0 .759-1.296c.196-.436.358-.898.478-1.368z" />
+                        </svg>
+                        k0ba.com
+                    </a>
                 </div>
+            </div>
+            <div style="margin-left:auto;text-align:right;">
+                <div style="margin-bottom:6px;color:#8a7060;letter-spacing:0.5px;text-transform:uppercase">Status</div>
+                <div style="margin-bottom:4px;color:#c9b8a8">Last Updated: 2026-02-25</div>
             </div>
         </div>
     </div>
