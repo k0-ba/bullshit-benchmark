@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bullshit Benchmark</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FDF8F2;
+            --surface: #F5EDE2;
+            --surface2: #EDE0CC;
+            --border: #D9C8B4;
+            --text: #2C1A0A;
+            --text-dim: #A08060;
+            --text-mid: #6B4F35;
+            --green: #4A8C6F;
+            --green-bg: #D8EFE3;
+            --amber: #C07820;
+            --amber-bg: #FFF0D0;
+            --poo: #6B3A00;
+            --poo-bg: #EDD5BB;
+            --accent: #7B5EA7;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            min-height: 100vh;
+            background-image:
+                radial-gradient(ellipse at 20% 10%, rgba(196, 98, 42, 0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 90%, rgba(196, 98, 42, 0.03) 0%, transparent 50%);
+        }
+
+        .wrap {
+            max-width: 960px;
+            margin: 0 auto;
+            position: relative;
+            padding: 40px 24px 48px;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            margin-bottom: 32px;
+        }
+
+        .header h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--text);
+            line-height: 1;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header h1 .bs-word {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-size: 36px;
+            color: var(--poo);
+            letter-spacing: -1px;
+            position: relative;
+        }
+
+        .header h1 .bs-word::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 52%;
+            height: 2px;
+            background: var(--poo);
+            opacity: 0.4;
+            transform: rotate(-1deg);
+        }
+
+        .header h1 .bench-word {
+            color: var(--green);
+            text-transform: uppercase;
+            font-size: 36px;
+            letter-spacing: 2px;
+        }
+
+        .github-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--text-dim);
+            text-decoration: none;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 3px 9px;
+            background: var(--surface);
+            transition: all 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        .github-tag:hover {
+            border-color: var(--accent);
+            color: var(--text);
+        }
+
+        .header p {
+            color: var(--text-mid);
+            font-size: 12px;
+            line-height: 1.7;
+            margin-top: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            max-width: 600px;
+            border-left: 2px solid var(--border);
+            padding-left: 12px;
+        }
+
+        /* ── LEGEND ── */
+        .legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--text-mid);
+            letter-spacing: 0.3px;
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* ── CONTROLS ── */
+        .controls {
+            margin-bottom: 14px;
+            position: relative;
+            height: 28px;
+        }
+
+        .controls-inner {
+            position: absolute;
+            left: 373px;
+            top: 0;
+            display: flex;
+            gap: 6px;
+            flex-wrap: nowrap;
+            align-items: center;
+        }
+
+        .btn-group {
+            display: flex;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .btn {
+            padding: 4px 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            border-right: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-dim);
+            transition: all 0.15s;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn:last-child {
+            border-right: none;
+        }
+
+        .btn:hover {
+            color: var(--text);
+            background: var(--surface2);
+        }
+
+        .btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            color: var(--text-dim);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+        }
+
+        /* ── SECTION TITLE ── */
+        .chart-section-title {
+            margin-bottom: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chart-section-title::before {
+            content: '▸';
+            color: var(--green);
+            font-size: 8px;
+        }
+
+        /* ── ROWS ── */
+        .chart-row {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            margin-bottom: 1px;
+            padding: 3px 6px 3px 0;
+            border-radius: 3px;
+            transition: background 0.12s;
+            cursor: default;
+            border-left: 3px solid transparent;
+        }
+
+        .chart-row:hover {
+            filter: brightness(0.97);
+        }
+
+        .row-label {
+            width: 190px;
+            flex-shrink: 0;
+        }
+
+        .row-name {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.3;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .tag-cols {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            flex-shrink: 0;
+        }
+
+        .org-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+            border-radius: 3px;
+            padding: 1px 4px;
+            border: 1px solid;
+        }
+
+        .reasoning-tag {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            border-radius: 3px;
+            padding: 1px 4px;
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+        }
+
+        .reasoning-tag-High {
+            background: rgba(123, 94, 167, 0.18);
+            color: #5D3F8A;
+            border: 1px solid rgba(123, 94, 167, 0.4);
+            font-weight: 600;
+        }
+
+        .reasoning-tag-Low {
+            background: rgba(123, 94, 167, 0.07);
+            color: #9B7FC0;
+            border: 1px solid rgba(123, 94, 167, 0.2);
+        }
+
+        .reasoning-tag-None {
+            background: transparent;
+            color: #C8BAA8;
+            border: 1px solid #E0D4C4;
+        }
+
+        /* ── BAR ── */
+        .bar-container {
+            flex: 1;
+            height: 18px;
+            display: flex;
+            background: var(--surface2);
+            overflow: hidden;
+            border-radius: 2px;
+            margin-left: 3px;
+        }
+
+        .bar-segment {
+            height: 100%;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .bar-green {
+            background: var(--green);
+        }
+
+        .bar-amber {
+            background: var(--amber);
+        }
+
+        .bar-poo {
+            background: var(--poo);
+        }
+
+        .bar-values {
+            width: 128px;
+            flex-shrink: 0;
+            display: flex;
+            gap: 6px;
+            font-size: 10px;
+            align-items: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .val-green {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .val-amber {
+            color: var(--amber);
+        }
+
+        .val-poo {
+            color: var(--poo);
+            font-weight: 600;
+        }
+
+        .rank-num {
+            width: 24px;
+            flex-shrink: 0;
+            font-size: 9px;
+            color: var(--text-dim);
+            text-align: right;
+            padding-left: 8px;
+        }
+
+        /* ── GROUP HEADERS ── */
+        .group-header {
+            margin: 22px 0 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .group-header-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .group-header-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .group-header-stat {
+            font-size: 10px;
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        /* ── ORG CARDS ── */
+        .org-cards {
+            margin-bottom: 28px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 8px;
+        }
+
+        .org-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-top: 3px solid transparent;
+            border-radius: 4px;
+            padding: 12px;
+            transition: box-shadow 0.15s;
+        }
+
+        .org-card:hover {
+            box-shadow: 0 2px 12px rgba(107, 58, 0, 0.08);
+        }
+
+        .org-card-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .org-card-score {
+            font-family: 'Syne', sans-serif;
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--green);
+            line-height: 1;
+            margin-bottom: 1px;
+            letter-spacing: -1px;
+        }
+
+        .org-card-label {
+            font-size: 9px;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .org-card-bar {
+            height: 3px;
+            border-radius: 1px;
+            background: var(--surface2);
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            margin: 24px 0 20px;
+            height: 1px;
+            background: var(--border);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrap">
+
+        <div class="header">
+            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:10px">
+                <h1><span class="bs-word">Bullshit</span> <span style="font-size:32px;line-height:1">💩</span> <span
+                        class="bench-word">Benchmark</span></h1>
+                <a href="https://github.com/petergpt/bullshit-benchmark" target="_blank" class="github-tag">
+                    <svg height="12" width="12" viewBox="0 0 16 16" fill="currentColor">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                    petergpt/bullshit-benchmark
+                </a>
+            </div>
+            <p>Can LLMs push back on nonsensical prompts — or do they hallucinate their way through? Green = called the
+                BS. 💩 = took the bait.</p>
+        </div>
+
+        <div class="controls">
+            <div style="display:flex;align-items:center;gap:6px;">
+                <span class="section-label">
+                    <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"
+                        style="margin-right:3px;vertical-align:-1px">
+                        <path
+                            d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3A1.5 1.5 0 0 1 15 10.5v3A1.5 1.5 0 0 1 13.5 15h-3A1.5 1.5 0 0 1 9 13.5v-3z" />
+                    </svg>
+                    Group
+                </span>
+                <div class="btn-group">
+                    <button class="btn active" onclick="setView('all')">
+                        <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"
+                            style="margin-right:3px;vertical-align:-1px">
+                            <path
+                                d="M1 2.5A.5.5 0 0 1 1.5 2h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2.5zm0 4A.5.5 0 0 1 1.5 6h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 6.5zm0 4A.5.5 0 0 1 1.5 10h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 10.5zm0 4A.5.5 0 0 1 1.5 14h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14.5z" />
+                        </svg>
+                        All
+                    </button>
+                    <button class="btn" onclick="setView('org')">
+                        <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"
+                            style="margin-right:3px;vertical-align:-1px">
+                            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                            <path fill-rule="evenodd"
+                                d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
+                            <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+                        </svg>
+                        Org
+                    </button>
+                    <button class="btn" onclick="setView('reasoning')">
+                        <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"
+                            style="margin-right:3px;vertical-align:-1px">
+                            <path
+                                d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4zM3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.389.389 0 0 0-.029-.518z" />
+                            <path fill-rule="evenodd"
+                                d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A7.988 7.988 0 0 1 0 10zm8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3z" />
+                        </svg>
+                        Reasoning
+                    </button>
+                </div>
+            </div>
+            <div class="controls-inner">
+            </div>
+        </div>
+
+        <div id="viz">Loading data...</div>
+
+        <script>
+            let RAW = [];
+
+            const ORG_COLORS = {
+                anthropic: '#C0531A',
+                openai: '#0D7A5F',
+                google: '#1A6BBF',
+                qwen: '#0077A8',
+                deepseek: '#3A4FB5',
+                moonshotai: '#0A8A72',
+                'x-ai': '#555555',
+                mistralai: '#B83020',
+                baidu: '#1A2AB5',
+                xiaomi: '#CC4400',
+                minimax: '#6B3AAA',
+                'z-ai': '#007A9A',
+                'bytedance-seed': '#A01535',
+                'prime-intellect': '#5A3A99',
+            };
+
+            const ORG_DOMAINS = {
+                anthropic: 'anthropic.com',
+                openai: 'openai.com',
+                google: 'google.com',
+                qwen: 'qwen.ai',
+                deepseek: 'deepseek.com',
+                moonshotai: 'moonshot.cn',
+                'x-ai': 'x.ai',
+                mistralai: 'mistral.ai',
+                baidu: 'baidu.com',
+                xiaomi: 'xiaomi.com',
+                minimax: 'minimaxi.com',
+                'z-ai': 'zhipuai.cn',
+                'bytedance-seed': 'bytedance.com',
+                'prime-intellect': 'primeintellect.ai',
+            };
+
+            let currentView = 'all';
+            let currentSort = 'green';
+
+            function formatModelName(id) {
+                const overrides = {
+                    'qwen3.5-397b-a17b': 'Qwen3.5 397b A17b',
+                    'kimi-k2.5': 'Kimi K2.5',
+                    'gpt-5.2': 'GPT-5.2',
+                    'minimax-m2.5': 'Minimax M2.5',
+                    'deepseek-v3.2': 'Deepseek V3.2',
+                    'ernie-4.5-300b-a47b': 'Ernie 4.5 300b A47b',
+                    'intellect-3': 'Intellect 3',
+                    'o4-mini': 'o4 Mini',
+                    'gpt-oss-120b': 'GPT OSS 120b',
+                    'mimo-v2-flash': 'Mimo v2 Flash',
+                    'glm-5': 'Glm 5',
+                    'grok-4.1-fast': 'Grok 4.1 Fast',
+                    'seed-1.6': 'Seed 1.6',
+                    'gemma-3-27b-it': 'Gemma 3 27b IT',
+                    'mistral-large-2512': 'Mistral Large 2512'
+                };
+                if (overrides[id]) return overrides[id];
+
+                return id.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+            }
+
+            function LEGEND_HTML() {
+                const sorts = [
+                    { key: 'green', color: 'var(--green)', dot: '●', label: 'Called out nonsense' },
+                    { key: 'amber', color: 'var(--amber)', dot: '●', label: 'Partial pushback' },
+                    { key: 'red', color: 'var(--poo)', dot: '💩', label: 'Took the bait' },
+                ];
+                return `<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">` +
+                    sorts.map(s => {
+                        const active = s.key === currentSort;
+                        return `<button onclick="setSort('${s.key}')" style="
+        display:inline-flex;align-items:center;gap:5px;
+        background:${active ? 'rgba(44,26,10,0.06)' : 'none'};
+        border:${active ? '1px solid rgba(44,26,10,0.12)' : '1px solid transparent'};
+        border-radius:4px;
+        cursor:pointer;padding:2px 6px 2px 5px;
+        font-family:'JetBrains Mono',monospace;font-size:10px;
+        color:${active ? 'var(--text)' : 'var(--text-mid)'};
+        font-weight:${active ? '600' : '400'};
+        transition:all 0.15s;letter-spacing:0.3px;
+      ">
+        <span style="color:${s.color};font-size:${s.dot === '💩' ? '10px' : '8px'}">${s.dot}</span>
+        ${s.label}
+        ${active ? '<span style="color:var(--text-dim);font-size:9px;margin-left:1px">↓</span>' : ''}
+      </button>`;
+                    }).join('') +
+                    `</div>`;
+            }
+
+            function sectionTitle(text) {
+                return `<div style="position:relative;margin-bottom:10px;display:flex;align-items:center">
+    <div class="chart-section-title">${text}</div>
+    <div style="position:absolute;left:373px;display:flex;align-items:center">${LEGEND_HTML()}</div>
+  </div>`;
+            }
+
+            function setView(v) {
+                currentView = v;
+                document.querySelectorAll('.btn-group:first-of-type .btn').forEach((b, i) => {
+                    b.classList.toggle('active', ['all', 'org', 'reasoning'][i] === v);
+                });
+                render();
+            }
+
+            function setSort(s) {
+                currentSort = s;
+                render();
+            }
+
+            function sortData(data) {
+                return [...data].sort((a, b) => {
+                    if (currentSort === 'green') return b.g - a.g;
+                    if (currentSort === 'red') return b.r - a.r;
+                    return a.name.localeCompare(b.name);
+                });
+            }
+
+            function logoImg(org, size = 16) {
+                const domain = ORG_DOMAINS[org];
+                if (!domain) return '';
+                return `<img src="https://logo.clearbit.com/${domain}" width="${size}" height="${size}" style="border-radius:3px;object-fit:contain;flex-shrink:0;opacity:0.85" onerror="this.style.display='none'">`;
+            }
+
+            function barHtml(d, rank) {
+                const orgColor = ORG_COLORS[d.org] || '#888';
+                const orgBg = orgColor + '12';
+                const orgLabel = d.org === 'prime-intellect' ? 'prime-i' : d.org === 'bytedance-seed' ? 'bytedance' : d.org;
+                const displayName = d.name.replace(/\s*\((High|Low)\)\s*$/i, '');
+                return `
+    <div class="chart-row" style="border-left-color:${orgColor};background:${orgColor}08">
+      <div class="rank-num">${rank}</div>
+      <div class="tag-cols">
+        <div style="width:98px;display:flex;align-items:center">
+          <span class="org-tag" style="color:${orgColor};border-color:${orgColor}33;background:${orgBg}">
+            ${logoImg(d.org, 10)}${orgLabel}
+          </span>
+        </div>
+        <div style="width:44px;display:flex;align-items:center">
+          <span class="reasoning-tag reasoning-tag-${d.reasoning}">${d.reasoning}</span>
+        </div>
+      </div>
+      <div class="row-label">
+        <div class="row-name" title="${d.name}">${displayName}</div>
+      </div>
+      <div class="bar-container">
+        <div class="bar-segment bar-green" style="width:${d.g}%"></div>
+        <div class="bar-segment bar-amber" style="width:${d.a}%"></div>
+        <div class="bar-segment bar-poo" style="width:${d.r}%"></div>
+      </div>
+      <div class="bar-values">
+        <span class="val-green">${d.g.toFixed(0)}%</span>
+        <span class="val-amber">${d.a.toFixed(0)}%</span>
+        <span class="val-poo">${d.r.toFixed(0)}%</span>
+      </div>
+    </div>`;
+            }
+
+            function groupBy(key) {
+                const groups = {};
+                RAW.forEach(d => {
+                    const k = d[key];
+                    if (!groups[k]) groups[k] = [];
+                    groups[k].push(d);
+                });
+                return groups;
+            }
+
+            function avg(arr, key) {
+                return arr.reduce((s, d) => s + d[key], 0) / arr.length;
+            }
+
+            function render() {
+                const viz = document.getElementById('viz');
+
+                if (currentView === 'all') {
+                    const sorted = sortData(RAW);
+                    viz.innerHTML = `
+      ${sectionTitle(`All ${sorted.length} models — sorted by ${currentSort} %`)}
+      ${sorted.map((d, i) => barHtml(d, i + 1)).join('')}
+    `;
+                }
+
+                else if (currentView === 'org') {
+                    const groups = groupBy('org');
+                    const orgStats = Object.entries(groups).map(([org, models]) => ({
+                        org, models,
+                        g: avg(models, 'g'), a: avg(models, 'a'), r: avg(models, 'r'),
+                        n: models.length
+                    })).sort((a, b) => b.g - a.g);
+
+                    const cards = orgStats.map(o => `
+      <div class="org-card" style="border-top-color:${ORG_COLORS[o.org] || '#888'}">
+        <div class="org-card-name" style="color:${ORG_COLORS[o.org] || '#888'}">
+          ${logoImg(o.org, 12)}${o.org}
+        </div>
+        <div class="org-card-score">${o.g.toFixed(0)}%</div>
+        <div class="org-card-label">avg green · ${o.n} model${o.n > 1 ? 's' : ''}</div>
+        <div class="org-card-bar">
+          <div style="width:${o.g}%;background:var(--green);height:100%"></div>
+          <div style="width:${o.a}%;background:var(--amber);height:100%"></div>
+          <div style="width:${o.r}%;background:var(--poo);height:100%"></div>
+        </div>
+      </div>`).join('');
+
+                    const details = orgStats.map(o => {
+                        const sorted = sortData(o.models);
+                        return `
+        <div class="group-header">
+          <div class="group-header-name" style="color:${ORG_COLORS[o.org] || '#888'};display:flex;align-items:center;gap:6px">
+            ${logoImg(o.org, 14)}${o.org}
+          </div>
+          <div class="group-header-line"></div>
+          <div class="group-header-stat">${o.g.toFixed(0)}% avg green</div>
+        </div>
+        ${sorted.map((d, i) => barHtml(d, i + 1)).join('')}`;
+                    }).join('');
+
+                    viz.innerHTML = `
+      ${sectionTitle('Average green % by organisation')}
+      <div class="org-cards">${cards}</div>
+      <div class="divider"></div>
+      <div class="chart-section-title">Models grouped by org</div>
+      ${details}
+    `;
+                }
+
+                else if (currentView === 'reasoning') {
+                    const order = ['None', 'Low', 'High'];
+                    const groups = groupBy('reasoning');
+
+                    const details = order.filter(k => groups[k]).map(tier => {
+                        const models = groups[tier];
+                        const g = avg(models, 'g'), a = avg(models, 'a'), r = avg(models, 'r');
+                        const sorted = sortData(models);
+                        return `
+        <div class="group-header">
+          <div class="group-header-name">
+            <span class="reasoning-badge reasoning-${tier}" style="font-size:12px;padding:2px 8px">${tier} reasoning</span>
+          </div>
+          <div class="group-header-line"></div>
+          <div class="group-header-stat">${g.toFixed(0)}% avg green · ${models.length} models</div>
+        </div>
+        ${sorted.map((d, i) => barHtml(d, i + 1)).join('')}`;
+                    }).join('');
+
+                    // Summary comparison
+                    const summaryBars = order.filter(k => groups[k]).map(tier => {
+                        const g = avg(groups[tier], 'g');
+                        const a = avg(groups[tier], 'a');
+                        const r = avg(groups[tier], 'r');
+                        return `
+        <div class="chart-row">
+          <div class="rank-num"></div>
+          <div class="row-label">
+            <div class="row-name"><span class="reasoning-badge reasoning-${tier}">${tier}</span></div>
+            <div class="row-meta">${groups[tier].length} models</div>
+          </div>
+          <div class="bar-container">
+            <div class="bar-segment bar-green" style="width:${g}%"></div>
+            <div class="bar-segment bar-amber" style="width:${a}%"></div>
+            <div class="bar-segment bar-poo" style="width:${r}%"></div>
+          </div>
+          <div class="bar-values">
+            <span class="val-green">${g.toFixed(0)}%</span>
+            <span class="val-amber">${a.toFixed(0)}%</span>
+            <span class="val-poo">${r.toFixed(0)}%</span>
+          </div>
+        </div>`;
+                    }).join('');
+
+                    viz.innerHTML = `
+      ${sectionTitle('Does reasoning help with BS detection? (avg)')}
+      ${summaryBars}
+      <div class="divider"></div>
+      <div class="chart-section-title">Models by reasoning tier</div>
+      ${details}
+    `;
+                }
+            }
+
+            async function init() {
+                try {
+                    const res = await fetch('../../data/latest/aggregate_summary.json');
+                    if (!res.ok) throw new Error(`Failed to fetch data: ${res.status}`);
+                    const data = await res.json();
+
+                    RAW = data.leaderboard.map(item => {
+                        // Parse "org/model@reasoning=level"
+                        let reasoning = "None";
+                        let orgModel = item.model;
+
+                        if (orgModel.includes('@reasoning=')) {
+                            const parts = orgModel.split('@reasoning=');
+                            orgModel = parts[0];
+                            const val = parts[1];
+                            if (val) reasoning = val.charAt(0).toUpperCase() + val.slice(1);
+                        }
+
+                        const parts = orgModel.split('/');
+                        const org = parts[0];
+                        const rawModel = parts[1] || '';
+
+                        let formattedName = formatModelName(rawModel);
+                        if (reasoning !== "None") {
+                            formattedName += ` (${reasoning})`;
+                        }
+
+                        const total = item.scored_count || 1;
+                        const g = (item.score_2 / total) * 100;
+                        const a = (item.score_1 / total) * 100;
+                        const r = (item.score_0 / total) * 100;
+
+                        return {
+                            name: formattedName,
+                            org,
+                            reasoning,
+                            g,
+                            a,
+                            r
+                        };
+                    });
+
+                    render();
+                } catch (err) {
+                    document.getElementById('viz').innerHTML = `<div style="color:red;padding:20px;">Error loading data: ${err.message}</div>`;
+                }
+            }
+
+            init();
+        </script>
+
+    </div><!-- /wrap -->
+
+    <div style="background:#1a1208;border-top:1px solid #2d1d10;width:100%">
+        <div
+            style="max-width:960px;margin:0 auto;padding:20px 24px;display:flex;gap:40px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:10px;color:#5c4535">
+            <div>
+                <div style="margin-bottom:6px;color:#8a7060;letter-spacing:0.5px;text-transform:uppercase">Benchmark
+                </div>
+                <div style="margin-bottom:4px">
+                    💩 <strong style="color:#c9b8a8">Bullshit Benchmark</strong> by
+                    <a href="https://github.com/petergpt/bullshit-benchmark" target="_blank"
+                        style="color:#C0531A;text-decoration:none">petergpt</a>
+                </div>
+                <a href="https://github.com/petergpt/bullshit-benchmark" target="_blank"
+                    style="color:#5c4535;text-decoration:none;display:inline-flex;align-items:center;gap:3px">
+                    <svg height="10" width="10" viewBox="0 0 16 16" fill="currentColor">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                    github.com/petergpt
+                </a>
+            </div>
+            <div>
+                <div style="margin-bottom:6px;color:#8a7060;letter-spacing:0.5px;text-transform:uppercase">Design &
+                    Dataviz</div>
+                <div style="margin-bottom:4px"><strong style="color:#c9b8a8">k0-ba</strong></div>
+                <div style="display:flex;gap:12px">
+                    <a href="https://github.com/k0-ba" target="_blank"
+                        style="color:#5c4535;text-decoration:none;display:inline-flex;align-items:center;gap:3px">
+                        <svg height="10" width="10" viewBox="0 0 16 16" fill="currentColor">
+                            <path
+                                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                        </svg>
+                        k0-ba
+                    </a>
+                    <a href="https://twitter.com/k0ba_eth" target="_blank"
+                        style="color:#5c4535;text-decoration:none;display:inline-flex;align-items:center;gap:3px">
+                        <svg height="10" width="10" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.631L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" />
+                        </svg>
+                        @k0ba_eth
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
