@@ -7,7 +7,7 @@ A benchmark for testing whether models identify and push back on nonsensical pro
  **Check out fancy dashboard:** 
 👉 **[Fancy Viewer (Interactive DataViz) 💩](https://k0-ba.github.io/bullshit-benchmark/viewer/fancy-viewer/index.html)** 👈
 
- **Original dashboard:**  [Original Data Explorer](https://petergpt.github.io/bullshit-benchmark/viewer/index.html).*
+ **Original dashboard:**  [Original Data Explorer](https://petergpt.github.io/bullshit-benchmark/viewer/index.html).
 
 ## Repo Layout
 
