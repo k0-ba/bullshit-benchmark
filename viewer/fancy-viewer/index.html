@@ -154,9 +154,6 @@
         }
 
         .controls-inner {
-            position: absolute;
-            left: 373px;
-            top: 0;
             display: flex;
             gap: 6px;
             flex-wrap: nowrap;
@@ -228,7 +225,22 @@
         .chart-section-title::before {
             content: '▸';
             color: var(--green);
-            font-size: 8px;
+            font-size: 9px;
+            transition: transform 0.2s;
+        }
+
+        details[open] summary.chart-section-title::before {
+            transform: rotate(90deg);
+        }
+
+        summary.chart-section-title {
+            cursor: pointer;
+            list-style: none;
+            user-select: none;
+        }
+
+        summary.chart-section-title::-webkit-details-marker {
+            display: none;
         }
 
         /* ── ROWS ── */
@@ -249,7 +261,7 @@
         }
 
         .row-label {
-            width: 190px;
+            width: 150px;
             flex-shrink: 0;
         }
 
@@ -349,12 +361,18 @@
             gap: 6px;
             font-size: 10px;
             align-items: center;
+            justify-content: flex-end;
             font-variant-numeric: tabular-nums;
+        }
+
+        .bar-values span {
+            display: inline-block;
+            width: 28px;
+            text-align: right;
         }
 
         .val-green {
             color: var(--green);
-            font-weight: 600;
         }
 
         .val-amber {
@@ -363,7 +381,6 @@
 
         .val-poo {
             color: var(--poo);
-            font-weight: 600;
         }
 
         .rank-num {
@@ -612,28 +629,29 @@
                     sorts.map(s => {
                         const active = s.key === currentSort;
                         return `<button onclick="setSort('${s.key}')" style="
-        display:inline-flex;align-items:center;gap:5px;
+        display:inline-flex;align-items:center;gap:3px;
         background:${active ? 'rgba(44,26,10,0.06)' : 'none'};
         border:${active ? '1px solid rgba(44,26,10,0.12)' : '1px solid transparent'};
         border-radius:4px;
-        cursor:pointer;padding:2px 6px 2px 5px;
-        font-family:'JetBrains Mono',monospace;font-size:10px;
+        cursor:pointer;padding:2px 6px 2px 4px;
+        font-family:'JetBrains Mono',monospace;font-size:9px;
         color:${active ? 'var(--text)' : 'var(--text-mid)'};
-        font-weight:${active ? '600' : '400'};
+        font-weight:${active ? '600' : '500'};
         transition:all 0.15s;letter-spacing:0.3px;
       ">
-        <span style="color:${s.color};font-size:${s.dot === '💩' ? '10px' : '8px'}">${s.dot}</span>
+        <span style="color:${s.color};font-size:${s.dot === '💩' ? '9px' : '7px'}">${s.dot}</span>
         ${s.label}
-        ${active ? '<span style="color:var(--text-dim);font-size:9px;margin-left:1px">↓</span>' : ''}
+        ${active ? '<span style="color:var(--text-dim);font-size:8px;margin-left:0px">↓</span>' : ''}
       </button>`;
                     }).join('') +
                     `</div>`;
             }
 
-            function sectionTitle(text) {
+            function sectionTitle(text, showLegend = false) {
+                let legend = showLegend ? `<div style="margin-left:auto;display:flex;align-items:center">${LEGEND_HTML()}</div>` : '';
                 return `<div style="position:relative;margin-bottom:10px;display:flex;align-items:center">
     <div class="chart-section-title">${text}</div>
-    <div style="position:absolute;left:373px;display:flex;align-items:center">${LEGEND_HTML()}</div>
+    ${legend}
   </div>`;
             }
 
@@ -673,12 +691,12 @@
     <div class="chart-row" style="border-left-color:${orgColor};background:${orgColor}08">
       <div class="rank-num">${rank}</div>
       <div class="tag-cols">
-        <div style="width:98px;display:flex;align-items:center">
+        <div style="width:78px;display:flex;align-items:center">
           <span class="org-tag" style="color:${orgColor};border-color:${orgColor}33;background:${orgBg}">
             ${logoImg(d.org, 10)}${orgLabel}
           </span>
         </div>
-        <div style="width:44px;display:flex;align-items:center">
+        <div style="width:42px;display:flex;align-items:center">
           <span class="reasoning-tag reasoning-tag-${d.reasoning}">${d.reasoning}</span>
         </div>
       </div>
@@ -718,7 +736,7 @@
                 if (currentView === 'all') {
                     const sorted = sortData(RAW);
                     viz.innerHTML = `
-      ${sectionTitle(`All ${sorted.length} models — sorted by ${currentSort} %`)}
+      ${sectionTitle(`All ${sorted.length} models — sorted by ${currentSort} %`, true)}
       ${sorted.map((d, i) => barHtml(d, i + 1)).join('')}
     `;
                 }
@@ -754,15 +772,18 @@
           </div>
           <div class="group-header-line"></div>
           <div class="group-header-stat">${o.g.toFixed(0)}% avg green</div>
+          <div style="margin-left:12px">${LEGEND_HTML()}</div>
         </div>
         ${sorted.map((d, i) => barHtml(d, i + 1)).join('')}`;
                     }).join('');
 
                     viz.innerHTML = `
-      ${sectionTitle('Average green % by organisation')}
-      <div class="org-cards">${cards}</div>
-      <div class="divider"></div>
-      <div class="chart-section-title">Models grouped by org</div>
+      <details class="collapsible-summary">
+        <summary class="chart-section-title">Average green % by organisation</summary>
+        <div class="org-cards" style="margin-top:14px">${cards}</div>
+      </details>
+      <div class="divider" style="margin: 12px 0 20px"></div>
+      ${sectionTitle('Models grouped by org')}
       ${details}
     `;
                 }
@@ -782,6 +803,7 @@
           </div>
           <div class="group-header-line"></div>
           <div class="group-header-stat">${g.toFixed(0)}% avg green · ${models.length} models</div>
+          <div style="margin-left:12px">${LEGEND_HTML()}</div>
         </div>
         ${sorted.map((d, i) => barHtml(d, i + 1)).join('')}`;
                     }).join('');
@@ -812,10 +834,12 @@
                     }).join('');
 
                     viz.innerHTML = `
-      ${sectionTitle('Does reasoning help with BS detection? (avg)')}
-      ${summaryBars}
-      <div class="divider"></div>
-      <div class="chart-section-title">Models by reasoning tier</div>
+      <details class="collapsible-summary">
+        <summary class="chart-section-title">Does reasoning help with BS detection? (avg)</summary>
+        <div style="margin-top:14px;margin-bottom:14px;display:flex;flex-direction:column;gap:1px">${summaryBars}</div>
+      </details>
+      <div class="divider" style="margin: 12px 0 20px"></div>
+      ${sectionTitle('Models by reasoning tier')}
       ${details}
     `;
                 }
@@ -836,7 +860,14 @@
                             const parts = orgModel.split('@reasoning=');
                             orgModel = parts[0];
                             const val = parts[1];
-                            if (val) reasoning = val.charAt(0).toUpperCase() + val.slice(1);
+                            if (val) {
+                                let r = val.charAt(0).toUpperCase() + val.slice(1);
+                                if (r === 'Default') {
+                                    reasoning = "None";
+                                } else {
+                                    reasoning = r;
+                                }
+                            }
                         }
 
                         const parts = orgModel.split('/');
