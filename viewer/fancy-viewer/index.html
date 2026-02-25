@@ -355,19 +355,19 @@
         }
 
         .bar-values {
-            width: 128px;
             flex-shrink: 0;
             display: flex;
             gap: 6px;
             font-size: 10px;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: flex-start;
             font-variant-numeric: tabular-nums;
+            margin-left: 8px;
         }
 
         .bar-values span {
             display: inline-block;
-            width: 28px;
+            width: 20px;
             text-align: right;
         }
 
@@ -648,7 +648,7 @@
             }
 
             function sectionTitle(text, showLegend = false) {
-                let legend = showLegend ? `<div style="margin-left:auto;display:flex;align-items:center">${LEGEND_HTML()}</div>` : '';
+                let legend = showLegend ? `<div style="position:absolute;left:311px;display:flex;align-items:center">${LEGEND_HTML()}</div>` : '';
                 return `<div style="position:relative;margin-bottom:10px;display:flex;align-items:center">
     <div class="chart-section-title">${text}</div>
     ${legend}
@@ -766,13 +766,13 @@
                     const details = orgStats.map(o => {
                         const sorted = sortData(o.models);
                         return `
-        <div class="group-header">
-          <div class="group-header-name" style="color:${ORG_COLORS[o.org] || '#888'};display:flex;align-items:center;gap:6px">
+        <div class="group-header" style="position:relative">
+          <div class="group-header-name" style="color:${ORG_COLORS[o.org] || '#888'};display:flex;align-items:center;gap:6px;background:var(--bg);padding-right:8px;z-index:2">
             ${logoImg(o.org, 14)}${o.org}
           </div>
-          <div class="group-header-line"></div>
-          <div class="group-header-stat">${o.g.toFixed(0)}% avg green</div>
-          <div style="margin-left:12px">${LEGEND_HTML()}</div>
+          <div class="group-header-line" style="position:absolute;left:0;right:0;z-index:1"></div>
+          <div style="position:absolute;left:311px;background:var(--bg);padding:0 8px;display:flex;align-items:center;z-index:2">${LEGEND_HTML()}</div>
+          <div class="group-header-stat" style="background:var(--bg);padding-left:8px;z-index:2;margin-left:auto">${o.g.toFixed(0)}% avg green</div>
         </div>
         ${sorted.map((d, i) => barHtml(d, i + 1)).join('')}`;
                     }).join('');
@@ -797,13 +797,13 @@
                         const g = avg(models, 'g'), a = avg(models, 'a'), r = avg(models, 'r');
                         const sorted = sortData(models);
                         return `
-        <div class="group-header">
-          <div class="group-header-name">
+        <div class="group-header" style="position:relative">
+          <div class="group-header-name" style="background:var(--bg);padding-right:8px;z-index:2">
             <span class="reasoning-badge reasoning-${tier}" style="font-size:12px;padding:2px 8px">${tier} reasoning</span>
           </div>
-          <div class="group-header-line"></div>
-          <div class="group-header-stat">${g.toFixed(0)}% avg green · ${models.length} models</div>
-          <div style="margin-left:12px">${LEGEND_HTML()}</div>
+          <div class="group-header-line" style="position:absolute;left:0;right:0;z-index:1"></div>
+          <div style="position:absolute;left:311px;background:var(--bg);padding:0 8px;display:flex;align-items:center;z-index:2">${LEGEND_HTML()}</div>
+          <div class="group-header-stat" style="background:var(--bg);padding-left:8px;z-index:2;margin-left:auto">${g.toFixed(0)}% avg green · ${models.length} models</div>
         </div>
         ${sorted.map((d, i) => barHtml(d, i + 1)).join('')}`;
                     }).join('');
